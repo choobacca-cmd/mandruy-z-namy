@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Послуги - Туристичне агентство "Мандруй з нами"</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c6e49;
+            --secondary: #4c956c;
+            --accent: #fefee3;
+            --light: #fefee3;
+            --dark: #1d3557;
+            --text: #333;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .category-btn {
+            background-color: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tour-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tour {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .tour:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        
+        .tour-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .tour-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .tour:hover .tour-img {
+            transform: scale(1.05);
+        }
+        
+        .tour-content {
+            padding: 1.5rem;
+        }
+        
+        .tour h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .tour-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .tour-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .tour p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+            margin: 1rem 0;
+        }
+        
+        .tour-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .services-section {
+            background-color: var(--light);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .service-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .process-section {
+            background: linear-gradient(rgba(44, 110, 73, 0.05), rgba(44, 110, 73, 0.05));
+        }
+        
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            counter-reset: step;
+        }
+        
+        .process-step {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .process-step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .process-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .process-step h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .destination-card {
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            height: 300px;
+            box-shadow: var(--shadow);
+        }
+        
+        .destination-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .destination-card:hover .destination-img {
+            transform: scale(1.1);
+        }
+        
+        .destination-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+        }
+        
+        .destination-overlay h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        @media (max-width: 992px) {
+            .tour-list {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .tour-footer {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .tour-list, .services-grid, .destinations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .categories {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .category-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-globe-europe"></i>
+                    <h1>Мандруй з нами</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Головна</a></li>
+                        <li><a href="about.html">Про нас</a></li>
+                        <li><a href="services.html" style="color: var(--accent);">Послуги</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="contacts.html">Контакти</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2 class="fade-in">Наші послуги</h2>
+            <p class="fade-in">Широкий спектр туристичних послуг для незабутніх подорожей</p>
+            <a href="#tours" class="btn fade-in">Переглянути тури</a>
+        </div>
+    </section>
+
+    <main>
+        <section>
+            <div class="container">
+                <div class="section-title">
+                    <h2>Оберіть тип подорожі</h2>
+                </div>
+                <div class="categories">
+                    <button class="category-btn active" data-category="all">Всі тури</button>
+                    <button class="category-btn" data-category="ukraine">Україна</button>
+                    <button class="category-btn" data-category="europe">Європа</button>
+                    <button class="category-btn" data-category="exotic">Екзотика</button>
+                    <button class="category-btn" data-category="active">Активний відпочинок</button>
+                </div>
+            </div>
+        </section>
+        
+        <section id="tours">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Популярні тури</h2>
+                </div>
+                <div class="tour-list">
+                    <div class="tour fade-in" data-category="ukraine">
+                        <div class="tour-badge">Хіт сезону</div>
+                        <img src="https://tourbaza.com/wp-content/uploads/2023/11/karpaty-5-dniv.jpg" alt="Карпати" class="tour-img">
+                        <div class="tour-content">
+                            <h3>Карпати — 5 днів у горах</h3>
+                            <div class="tour-meta">
+                                <span><i class="far fa-calendar"></i> 5 днів</span>
+                                <span><i class="fas fa-user-friends"></i> 1-10 осіб</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Україна</span>
+                            </div>
+                            <p>Неймовірні краєвиди, гуцульська кухня, термальні басейни та походи в гори. Тур включає проживання та сніданки.</p>
+                            <span class="price">від 4 500 грн</span>
+                            <div class="tour-footer">
+                                <a href="#" class="btn">Детальніше</a>
+                                <a href="#" class="btn btn-outline">Забронювати</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tour fade-in" data-category="ukraine">
+                        <img src="https://inlviv.in.ua/wp-content/uploads/2017/11/ploshha-rinok.jpg" alt="Львів" class="tour-img">
+                        <div class="tour-content">
+                            <h3>Міський вікенд у Львові</h3>
+                            <div class="tour-meta">
+                                <span><i class="far fa-calendar"></i> 3 дні</span>
+                                <span><i class="fas fa-user-friends"></i> 1-4 особи</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Україна</span>
+                            </div>
+                            <p>2 ночі у готелі в центрі Львова, екскурсії старим містом, кавова церемонія, театр або музеї — на вибір.</p>
+                            <span class="price">від 2 000 грн</span>
+                            <div class="tour-footer">
+                                <a href="#" class="btn">Детальніше</a>
+                                <a href="#" class="btn btn-outline">Забронювати</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tour fade-in" data-category="exotic">
+                        <div class="tour-badge">Ексклюзив</div>
+                        <img src="https://misto.travel/Image/source/news/2017/10/Bbali-Indonesia-2.jpg" alt="Балі" class="tour-img">
+                        <div class="tour-content">
+                            <h3>Екзотичний тур на Балі</h3>
+                            <div class="tour-meta">
+                                <span><i class="far fa-calendar"></i> 10 днів</span>
+                                <span><i class="fas fa-user-friends"></i> 1-8 осіб</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Індонезія</span>
+                            </div>
+                            <p>10 днів на райському острові: серфінг, джунглі, водоспади та храмові комплекси. Прямі авіарейси + трансфери.</p>
+                            <span class="price">від 29 900 грн</span>
+                            <div class="tour-footer">
+                                <a href="#" class="btn">Детальніше</a>
+                                <a href="#" class="btn btn-outline">Забронювати</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tour fade-in" data-category="active">
+                        <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=600&q=60" alt="Велотур" class="tour-img">
+                        <div class="tour-content">
+                            <h3>Велотур по Європі</h3>
+                            <div class="tour-meta">
+                                <span><i class="far fa-calendar"></i> 7 днів</span>
+                                <span><i class="fas fa-user-friends"></i> 6-12 осіб</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Чехія, Австрія</span>
+                            </div>
+                            <p>Маршрут через Чехію та Австрію. Проживання у гостьових будинках, супровід, прокат велосипедів включено.</p>
+                            <span class="price">від 18 500 грн</span>
+                            <div class="tour-footer">
+                                <a href="#" class="btn">Детальніше</a>
+                                <a href="#" class="btn btn-outline">Забронювати</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tour fade-in" data-category="europe">
+                        <div class="tour-badge">Популярний</div>
+                        <img src="https://i0.wp.com/mandry.club/wp-content/uploads/2019/02/wien11.jpg" alt="Культурний тур" class="tour-img">
+                        <div class="tour-content">
+                            <h3>Культурна Європа</h3>
+                            <div class="tour-meta">
+                                <span><i class="far fa-calendar"></i> 8 днів</span>
+                                <span><i class="fas fa-user-friends"></i> 4-15 осіб</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Прага, Відень, Будапешт</span>
+                            </div>
+                            <p>Класичний тур: Прага — Відень — Будапешт. Екскурсії, музеї, вільний час та смачні вечері включені в програму.</p>
+                            <span class="price">від 14 800 грн</span>
+                            <div class="tour-footer">
+                                <a href="#" class="btn">Детальніше</a>
+                                <a href="#" class="btn btn-outline">Забронювати</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tour fade-in" data-category="exotic">
+                        <img src="https://images.unsplash.com/photo-1536152470836-b943b246224c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Тайланд" class="tour-img">
+                        <div class="tour-content">
+                            <h3>Тайланд: острови та культура</h3>
+                            <div class="tour-meta">
+                                <span><i class="far fa-calendar"></i> 12 днів</span>
+                                <span><i class="fas fa-user-friends"></i> 2-10 осіб</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Тайланд</span>
+                            </div>
+                            <p>Бангкок, Чіангмай та райські острови. Храми, слонячий заповідник, дайвінг та тайський масаж.</p>
+                            <span class="price">від 32 500 грн</span>
+                            <div class="tour-footer">
+                                <a href="#" class="btn">Детальніше</a>
+                                <a href="#" class="btn btn-outline">Забронювати</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="services-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Додаткові послуги</h2>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-passport"></i>
+                        </div>
+                        <h3>Візова підтримка</h3>
+                        <p>Допомога у оформленні віз та консультації щодо документів</p>
+                    </div>
+                    
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <h3>Авіаквитки</h3>
+                        <p>Підбір та бронювання авіаквитків за найкращими цінами</p>
+                    </div>
+                    
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-hotel"></i>
+                        </div>
+                        <h3>Готелі</h3>
+                        <p>Бронювання готелів, апартаментів та інших видів проживання</p>
+                    </div>
+                    
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <h3>Трансфери</h3>
+                        <p>Організація трансферів та прокату автомобілів</p>
+                    </div>
+                    
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-umbrella-beach"></i>
+                        </div>
+                        <h3>Екскурсії</h3>
+                        <p>Індивідуальні та групові екскурсії з професійними гідами</p>
+                    </div>
+                    
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Туристичне страхування</h3>
+                        <p>Оформлення медичного та туристичного страхування</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="process-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Як замовити тур</h2>
+                </div>
+                <div class="process-steps">
+                    <div class="process-step fade-in">
+                        <div class="process-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Оберіть тур</h3>
+                        <p>Знайдіть ідеальну подорож серед наших пропозицій або зверніться за індивідуальним підбором</p>
+                    </div>
+                    
+                    <div class="process-step fade-in">
+                        <div class="process-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h3>Зв'яжіться з нами</h3>
+                        <p>Наш менеджер уточнить деталі, відповість на всі питання та допоможе з вибором</p>
+                    </div>
+                    
+                    <div class="process-step fade-in">
+                        <div class="process-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h3>Оформлення</h3>
+                        <p>Укладаємо договір, вносите передоплату та отримуєте підтвердження бронювання</p>
+                    </div>
+                    
+                    <div class="process-step fade-in">
+                        <div class="process-icon">
+                            <i class="fas fa-suitcase-rolling"></i>
+                        </div>
+                        <h3>Подорожуйте</h3>
+                        <p>Отримуєте всі документи та насолоджуєтесь незабутньою подорожжю</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="fade-in">Готові до незабутньої подорожі?</h2>
+                <p class="fade-in">Зв'яжіться з нами для отримання детальної консультації та підбору ідеального туру</p>
+                <div class="cta-buttons fade-in">
+                    <a href="contacts.html" class="btn">Зв'язатися</a>
+                    <a href="tel:+380991234567" class="btn">Зателефонувати</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Мандруй з нами</h3>
+                    <p>Ми створюємо незабутні подорожі, які надихають та залишають спогади на все життя.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Посилання</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Головна</a></li>
+                        <li><a href="about.html">Про нас</a></li>
+                        <li><a href="services.html">Послуги</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="contacts.html">Контакти</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакти</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> м. Київ, вул. Примерна, 10</li>
+                        <li><i class="fas fa-phone"></i> +380 99 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> travel@example.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Туристичне агентство "Мандруй з нами". Всі права захищені.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInOnScroll = function() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.style.opacity = "1";
+                        element.style.transform = "translateY(0)";
+                    }
+                });
+            };
+            
+            fadeElements.forEach(element => {
+                element.style.opacity = "0";
+                element.style.transform = "translateY(20px)";
+                element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+            });
+            
+            window.addEventListener('scroll', fadeInOnScroll);
+            fadeInOnScroll(); 
+            
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const nav = document.querySelector('nav');
+            
+            mobileMenu.addEventListener('click', function() {
+                nav.classList.toggle('active');
+            });
+            
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const tours = document.querySelectorAll('.tour');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    tours.forEach(tour => {
+                        if (category === 'all' || tour.getAttribute('data-category') === category) {
+                            tour.style.display = 'block';
+                        } else {
+                            tour.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

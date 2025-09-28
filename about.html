@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Про нас - Туристичне агентство "Мандруй з нами"</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c6e49;
+            --secondary: #4c956c;
+            --accent: #fefee3;
+            --light: #fefee3;
+            --dark: #1d3557;
+            --text: #333;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-text {
+            font-size: 1.1rem;
+        }
+        
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        blockquote {
+            background-color: var(--light);
+            padding: 2rem;
+            border-left: 5px solid var(--primary);
+            margin: 2rem 0;
+            font-style: italic;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+        }
+        
+        blockquote::before {
+            content: "";
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+        }
+        
+        .team-section {
+            background-color: var(--light);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-member {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        
+        .member-photo {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .member-info {
+            padding: 1.5rem;
+        }
+        
+        .member-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .member-info .position {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .value-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .value-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .value-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .stats-section {
+            background: linear-gradient(rgba(44, 110, 73, 0.9), rgba(44, 110, 73, 0.9)), url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .stat-item {
+            padding: 1.5rem;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .stat-text {
+            font-size: 1.2rem;
+        }
+        
+        .testimonials-section {
+            background-color: var(--light);
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .testimonial::before {
+            content: "";
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 15px;
+        }
+        
+        .testimonial-text {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .client-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .client-details h4 {
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+        }
+        
+        .client-details p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        @media (max-width: 992px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .team-grid, .values-grid, .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-globe-europe"></i>
+                    <h1>Мандруй з нами</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Головна</a></li>
+                        <li><a href="about.html" style="color: var(--accent);">Про нас</a></li>
+                        <li><a href="services.html">Послуги</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="contacts.html">Контакти</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2 class="fade-in">Наша історія та місія</h2>
+            <p class="fade-in">Більше 10 років ми відкриваємо світ для тисяч щасливих мандрівників</p>
+        </div>
+    </section>
+
+    <main>
+        <section>
+            <div class="container">
+                <div class="section-title">
+                    <h2>Хто ми?</h2>
+                </div>
+                <div class="about-content">
+                    <div class="about-text fade-in">
+                        <p>Ми — команда ентузіастів, яка понад 10 років організовує незабутні подорожі для тисяч українців. Наша місія — робити світ доступнішим, а відпочинок — якісним та безпечним.</p>
+                        
+                        <p>Засноване у 2013 році, наше агентство почалося з невеликої групи друзів-мандрівників, які вирішили ділитися своїм досвідом та допомагати іншим відкривати красу світу. За роки роботи ми перетворилися на одну з провідних туристичних компаній України.</p>
+                        
+                        <blockquote class="fade-in">
+                            "Подорожі — єдине, на що ти витрачаєш гроші, але стаєш багатшим."
+                            <cite>— Незнайомець</cite>
+                        </blockquote>
+                        
+                        <p>Наша команда — це професіонали, які самі об'їздили десятки країн і знають, що справді важливо для комфортної подорожі. Ми не просто продаємо тури — ми створюємо незабутні враження.</p>
+                    </div>
+                    <div class="about-image fade-in">
+                        <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Наша команда">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section style="background-color: var(--light);">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Наші цінності</h2>
+                </div>
+                <div class="values-grid">
+                    <div class="value-card fade-in">
+                        <div class="value-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Любов до подорожей</h3>
+                        <p>Ми самі завзято мандруємо і знаємо, що робить подорож справді незабутньою</p>
+                    </div>
+                    
+                    <div class="value-card fade-in">
+                        <div class="value-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Безпека та надійність</h3>
+                        <p>Ваша безпека — наш пріоритет. Ми працюємо лише з перевіреними партнерами</p>
+                    </div>
+                    
+                    <div class="value-card fade-in">
+                        <div class="value-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3>Індивідуальний підхід</h3>
+                        <p>Кожен клієнт унікальний. Ми створюємо тури з урахуванням ваших уподобань</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item fade-in">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-text">Років досвіду</span>
+                    </div>
+                    
+                    <div class="stat-item fade-in">
+                        <span class="stat-number">15 000+</span>
+                        <span class="stat-text">Задоволених клієнтів</span>
+                    </div>
+                    
+                    <div class="stat-item fade-in">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-text">Країн у пропозиції</span>
+                    </div>
+                    
+                    <div class="stat-item fade-in">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-text">Підтримка під час подорожей</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="team-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Наша команда</h2>
+                </div>
+                <div class="team-grid">
+                    <div class="team-member fade-in">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Олег Петренко" class="member-photo">
+                        <div class="member-info">
+                            <h3>Олег Петренко</h3>
+                            <span class="position">Засновник та CEO</span>
+                            <p>Мандрує світом понад 15 років. Створив компанію з мрії робити подорожі доступними для кожного.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member fade-in">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Анна Коваль" class="member-photo">
+                        <div class="member-info">
+                            <h3>Анна Коваль</h3>
+                            <span class="position">Керівник відділу турів</span>
+                            <p>Експерт з європейських напрямків. Знає всі нюанси організації ідеальної подорожі.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member fade-in">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Максим Шевченко" class="member-photo">
+                        <div class="member-info">
+                            <h3>Максим Шевченко</h3>
+                            <span class="position">Експерт з екзотичних напрямків</span>
+                            <p>Спеціалізується на турах до Азії, Африки та Південної Америки. Знає всі секрети далеких країн.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member fade-in">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Софія Лисенко" class="member-photo">
+                        <div class="member-info">
+                            <h3>Софія Лисенко</h3>
+                            <span class="position">Менеджер з клієнтського сервісу</span>
+                            <p>Завжди на зв'язку, щоб вирішити будь-які питання під час вашої подорожі.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="testimonials-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Відгуки наших клієнтів</h2>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial fade-in">
+                        <div class="testimonial-text">
+                            "Подорож на Балі, організована цими професіоналами, перевершила всі мої очікування! Все було ідеально — від трансферу до екскурсій. Дякую за незабутні враження!"
+                        </div>
+                        <div class="client-info">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Марія" class="client-avatar">
+                            <div class="client-details">
+                                <h4>Марія Іваненко</h4>
+                                <p>Подорож на Балі, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial fade-in">
+                        <div class="testimonial-text">
+                            "Вже вдруге звертаюся до цього агентства. Перший раз їздили в Карпати, цього року — у велотур Європою. Обидві подорожі були організовані бездоганно. Рекомендую!"
+                        </div>
+                        <div class="client-info">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Андрій" class="client-avatar">
+                            <div class="client-details">
+                                <h4>Андрій Ткаченко</h4>
+                                <p>Велотур Європою, 2024</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial fade-in">
+                        <div class="testimonial-text">
+                            "Замовляли тур до Львова для всієї родини. Все було чудово: комфортний готель, цікаві екскурсії, смачна їжа. Особливо дякую за поради щодо місцевих ресторанів!"
+                        </div>
+                        <div class="client-info">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Оксана" class="client-avatar">
+                            <div class="client-details">
+                                <h4>Оксана та родина</h4>
+                                <p>Вікенд у Львові, 2024</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Мандруй з нами</h3>
+                    <p>Ми створюємо незабутні подорожі, які надихають та залишають спогади на все життя.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Посилання</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Головна</a></li>
+                        <li><a href="about.html">Про нас</a></li>
+                        <li><a href="services.html">Послуги</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="contacts.html">Контакти</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакти</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> м. Київ, вул. Примерна, 10</li>
+                        <li><i class="fas fa-phone"></i> +380 99 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> travel@example.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Туристичне агентство "Мандруй з нами". Всі права захищені.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInOnScroll = function() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.style.opacity = "1";
+                        element.style.transform = "translateY(0)";
+                    }
+                });
+            };
+            
+            fadeElements.forEach(element => {
+                element.style.opacity = "0";
+                element.style.transform = "translateY(20px)";
+                element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+            });
+            
+            window.addEventListener('scroll', fadeInOnScroll);
+            fadeInOnScroll(); 
+            
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const nav = document.querySelector('nav');
+            
+            mobileMenu.addEventListener('click', function() {
+                nav.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

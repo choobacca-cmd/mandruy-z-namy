@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Галерея - Туристичне агентство "Мандруй з нами"</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2c6e49;
+      --secondary: #4c956c;
+      --accent: #fefee3;
+      --light: #fefee3;
+      --dark: #1d3557;
+      --text: #333;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 1rem 0;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo i {
+      font-size: 2rem;
+    }
+
+    .logo h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--accent);
+      transition: var(--transition);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .mobile-menu {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 6rem 0;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: var(--secondary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    section {
+      padding: 4rem 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      color: var(--dark);
+      display: inline-block;
+    }
+
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background-color: var(--primary);
+      border-radius: 2px;
+    }
+
+    .gallery-filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .filter-btn {
+      background-color: white;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 0.7rem 1.5rem;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 300px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .gallery-item:hover .gallery-img {
+      transform: scale(1.1);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      color: white;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-overlay h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+    }
+
+    .gallery-overlay p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .video-section {
+      background-color: var(--light);
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 2rem;
+    }
+
+    .video-item {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .video-thumbnail {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .video-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .video-play:hover {
+      background-color: white;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .video-play i {
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin-left: 3px;
+    }
+
+    .video-info {
+      padding: 1.5rem;
+      background-color: white;
+    }
+
+    .video-info h3 {
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .testimonial::before {
+      content: "";
+      font-size: 4rem;
+      color: var(--primary);
+      opacity: 0.2;
+      position: absolute;
+      top: 10px;
+      left: 15px;
+    }
+
+    .testimonial-text {
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .client-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .client-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .client-details h4 {
+      margin-bottom: 0.3rem;
+      color: var(--dark);
+    }
+
+    .client-details p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .instagram-section {
+      background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+      color: white;
+      text-align: center;
+    }
+
+    .instagram-feed {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .instagram-item {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 200px;
+    }
+
+    .instagram-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .instagram-item:hover .instagram-img {
+      transform: scale(1.1);
+    }
+
+    .instagram-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .instagram-item:hover .instagram-overlay {
+      opacity: 1;
+    }
+
+    .instagram-overlay i {
+      font-size: 2rem;
+    }
+
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 3rem 0 1.5rem;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-column h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background-color: var(--primary);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-links a {
+      color: #ccc;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: white;
+      padding-left: 5px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: white;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-content {
+      position: relative;
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .modal-img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .close:hover {
+      color: var(--accent);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero h2 {
+        font-size: 2rem;
+      }
+
+      .section-title h2 {
+        font-size: 1.8rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-content {
+        width: 95%;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero {
+        padding: 4rem 0;
+      }
+
+      .gallery-grid,
+      .testimonials-grid,
+      .instagram-feed {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-filters {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .filter-btn {
+        width: 100%;
+        max-width: 250px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <i class="fas fa-globe-europe"></i>
+          <h1>Мандруй з нами</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index.html">Головна</a></li>
+            <li><a href="about.html">Про нас</a></li>
+            <li><a href="services.html">Послуги</a></li>
+            <li><a href="gallery.html" style="color: var(--accent);">Галерея</a></li>
+            <li><a href="contacts.html">Контакти</a></li>
+          </ul>
+        </nav>
+        <div class="mobile-menu">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h2 class="fade-in">Наші подорожі у фотографіях</h2>
+      <p class="fade-in">Загляньте у світ незабутніх вражень та надихаючих моментів</p>
+    </div>
+  </section>
+
+  <main>
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2>Галерея подорожей</h2>
+        </div>
+        <div class="gallery-filters">
+          <button class="filter-btn active" data-filter="all">Всі</button>
+          <button class="filter-btn" data-filter="ukraine">Україна</button>
+          <button class="filter-btn" data-filter="europe">Європа</button>
+          <button class="filter-btn" data-filter="asia">Азія</button>
+          <button class="filter-btn" data-filter="mountains">Гори</button>
+          <button class="filter-btn" data-filter="beach">Пляжі</button>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-item fade-in" data-category="ukraine mountains">
+            <img
+              src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e"
+              alt="Карпати" class="gallery-img">
+            <div class="gallery-overlay">
+              <h3>Карпатські вершини</h3>
+              <p>Українські Карпати взимку</p>
+            </div>
+          </div>
+
+          <div class="gallery-item fade-in" data-category="ukraine">
+            <img
+              src="https://eventukraine.com/ev/wp-content/uploads/2019/09/Depositphotos_14017349_s-2019.jpg"
+              alt="Львів" class="gallery-img">
+            <div class="gallery-overlay">
+              <h3>Старий Львів</h3>
+              <p>Архітектура та кав'ярні</p>
+            </div>
+          </div>
+
+          <div class="gallery-item fade-in" data-category="europe">
+            <img
+              src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              alt="Прага" class="gallery-img">
+            <div class="gallery-overlay">
+              <h3>Празький град</h3>
+              <p>Чехія, Прага</p>
+            </div>
+          </div>
+
+          <div class="gallery-item fade-in" data-category="asia beach">
+            <img
+              src="https://images.unsplash.com/photo-1536152470836-b943b246224c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              alt="Тайланд" class="gallery-img">
+            <div class="gallery-overlay">
+              <h3>Тайські острови</h3>
+              <p>Пхукет, Тайланд</p>
+            </div>
+          </div>
+
+          <div class="gallery-item fade-in" data-category="europe">
+            <img
+              src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34"
+              alt="Париж" class="gallery-img">
+            <div class="gallery-overlay">
+              <h3>Вечірній Париж</h3>
+              <p>Ейфелева вежа, Франція</p>
+            </div>
+          </div>
+
+          <div class="gallery-item fade-in" data-category="asia mountains">
+            <img
+              src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              alt="Японія" class="gallery-img">
+            <div class="gallery-overlay">
+              <h3>Фудзі-сан</h3>
+              <p>Гора Фудзі, Японія</p>
+            </div>
+          </div>
+
+          <div class="gallery-item fade-in" data-category="beach">
+            <img
+              src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              alt="Мальдіви" class="gallery-img">
+            <div class="gallery-overlay">
+              <h3>Мальдівський рай</h3>
+              <p>Кристальні води океану</p>
+            </div>
+          </div>
+
+          <div class="gallery-item fade-in" data-category="europe">
+            <img
+              src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              alt="Рим" class="gallery-img">
+            <div class="gallery-overlay">
+              <h3>Колізей</h3>
+              <p>Рим, Італія</p>
+            </div>
+          </div>
+
+          <div class="gallery-item fade-in" data-category="ukraine">
+            <img
+              src="https://dorogovkaz.com/images/odessa/odessa_photo2.jpg"
+              alt="Одеса" class="gallery-img">
+            <div class="gallery-overlay">
+              <h3>Одеський порт</h3>
+              <p>Чорне море, Україна</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="video-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Відео з подорожей</h2>
+        </div>
+        <div class="video-grid">
+          <div class="video-item fade-in">
+            <img
+              src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              alt="Подорож" class="video-thumbnail">
+            <div class="video-play">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="video-info">
+              <h3>Карпати: літо 2024</h3>
+              <p>3:45 хвилин</p>
+            </div>
+          </div>
+
+          <div class="video-item fade-in">
+            <img
+              src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              alt="Подорож" class="video-thumbnail">
+            <div class="video-play">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="video-info">
+              <h3>Балі: райський відпочинок</h3>
+              <p>5:20 хвилин</p>
+            </div>
+          </div>
+
+          <div class="video-item fade-in">
+            <img
+              src="https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              alt="Подорож" class="video-thumbnail">
+            <div class="video-play">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="video-info">
+              <h3>Європейські капітали</h3>
+              <p>7:15 хвилин</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2>Відгуки мандрівників</h2>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial fade-in">
+            <div class="testimonial-text">
+              "Подорож на Балі була мрією всього життя. Дякую команді за ідеальну організацію! Все було чудово: від
+              підбору готелю до екскурсій."
+            </div>
+            <div class="client-info">
+              <img
+                src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"
+                alt="Марія" class="client-avatar">
+              <div class="client-details">
+                <h4>Марія Іваненко</h4>
+                <p>Подорож на Балі, 2023</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial fade-in">
+            <div class="testimonial-text">
+              "Велотур Європою перевершив усі очікування! Маршрут був продуманий до дрібниць, готельні затишні, природа
+              неймовірна. Обов'язково повернемось!"
+            </div>
+            <div class="client-info">
+              <img
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="Андрій" class="client-avatar">
+              <div class="client-details">
+                <h4>Андрій Ткаченко</h4>
+                <p>Велотур Європою, 2024</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial fade-in">
+            <div class="testimonial-text">
+              "Відпочинок у Карпатах з родиною став найкращим за останні роки. Діти в захваті від походів, а ми - від
+              затишних вечорів біля каміну."
+            </div>
+            <div class="client-info">
+              <img
+                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="Оксана" class="client-avatar">
+              <div class="client-details">
+                <h4>Оксана та родина</h4>
+                <p>Карпати, зима 2024</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="instagram-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Наш Instagram</h2>
+          <p style="color: white; margin-top: 1rem;">Слідкуйте за нашими пригодами у соціальних мережах</p>
+        </div>
+        <div class="instagram-feed">
+          <div class="instagram-item fade-in">
+            <img
+              src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+              alt="Instagram" class="instagram-img">
+            <div class="instagram-overlay">
+              <i class="fab fa-instagram"></i>
+            </div>
+          </div>
+
+          <div class="instagram-item fade-in">
+            <img
+              src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+              alt="Instagram" class="instagram-img">
+            <div class="instagram-overlay">
+              <i class="fab fa-instagram"></i>
+            </div>
+          </div>
+
+          <div class="instagram-item fade-in">
+            <img
+              src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+              alt="Instagram" class="instagram-img">
+            <div class="instagram-overlay">
+              <i class="fab fa-instagram"></i>
+            </div>
+          </div>
+
+          <div class="instagram-item fade-in">
+            <img
+              src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+              alt="Instagram" class="instagram-img">
+            <div class="instagram-overlay">
+              <i class="fab fa-instagram"></i>
+            </div>
+          </div>
+
+          <div class="instagram-item fade-in">
+            <img
+              src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+              alt="Instagram" class="instagram-img">
+            <div class="instagram-overlay">
+              <i class="fab fa-instagram"></i>
+            </div>
+          </div>
+
+          <div class="instagram-item fade-in">
+            <img
+              src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+              alt="Instagram" class="instagram-img">
+            <div class="instagram-overlay">
+              <i class="fab fa-instagram"></i>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="btn" style="margin-top: 2rem;">Підписатися</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="imageModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImg">
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Мандруй з нами</h3>
+          <p>Ми створюємо незабутні подорожі, які надихають та залишають спогади на все життя.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h3>Посилання</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Головна</a></li>
+            <li><a href="about.html">Про нас</a></li>
+            <li><a href="services.html">Послуги</a></li>
+            <li><a href="gallery.html">Галерея</a></li>
+            <li><a href="contacts.html">Контакти</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Контакти</h3>
+          <ul class="footer-links">
+            <li><i class="fas fa-map-marker-alt"></i> м. Київ, вул. Примерна, 10</li>
+            <li><i class="fas fa-phone"></i> +380 99 123 4567</li>
+            <li><i class="fas fa-envelope"></i> travel@example.com</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>&copy; 2025 Туристичне агентство "Мандруй з нами". Всі права захищені.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const fadeElements = document.querySelectorAll('.fade-in');
+
+      const fadeInOnScroll = function () {
+        fadeElements.forEach(element => {
+          const elementTop = element.getBoundingClientRect().top;
+          const elementVisible = 150;
+          if (elementTop < window.innerHeight - elementVisible) {
+            element.style.opacity = "1";
+            element.style.transform = "translateY(0)";
+          }
+        });
+      };
+
+      fadeElements.forEach(element => {
+        element.style.opacity = "0";
+        element.style.transform = "translateY(20px)";
+        element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+      });
+
+      window.addEventListener('scroll', fadeInOnScroll);
+      fadeInOnScroll();
+
+      const mobileMenu = document.querySelector('.mobile-menu');
+      const nav = document.querySelector('nav');
+      mobileMenu.addEventListener('click', function () {
+        nav.classList.toggle('active');
+      });
+
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const galleryItems = document.querySelectorAll('.gallery-item');
+
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          const filter = this.getAttribute('data-filter');
+          galleryItems.forEach(item => {
+            if (filter === 'all' || item.getAttribute('data-category').includes(filter)) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      const closeBtn = document.querySelector('.close');
+
+      document.querySelectorAll('.gallery-item .gallery-img').forEach(img => {
+        img.addEventListener('click', () => {
+          modal.style.display = 'block';
+          modalImg.src = img.src;
+        });
+      });
+
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
