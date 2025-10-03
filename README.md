@@ -14,4 +14,5 @@
 - Font Awesome icons
 
 ## Розгортання
-Сайт розгорнуто на Render: [your-site-url.render.com]
+
+Сайт розгорнуто на Render: https://mandruy-z-namy.onrender.com
